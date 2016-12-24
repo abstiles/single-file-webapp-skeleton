@@ -18,7 +18,7 @@ ${BUILD_DIR}:
 
 webpack: ${BUILD_DIR}/index.html
 
-${BUILD_DIR}/index.html: docker-image ${PROJECT}/src/*
+${BUILD_DIR}/index.html: ${BUILD_DIR}/docker_image ${PROJECT}/src/*
 	docker run -it --rm \
 		-v "$(abspath ${PROJECT}):${DOCKER_WORKDIR}/project:Z" \
 		-w ${DOCKER_WORKDIR}/project \
