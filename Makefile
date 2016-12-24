@@ -1,17 +1,26 @@
-.PHONY: docker-image webpack
+.PHONY: clean docker-image webpack
 
-SUM := sha256sum
+PROJECT:=webapp
+BUILD_DIR:=${PROJECT}/build
+DOCKER_WORKDIR:=/usr/local/${PROJECT}
 
-docker-image: webapp/build/docker_image
+clean:
+	rm -rf "${BUILD_DIR}" "${PROJECT}"/node_modules
 
-webapp/build/docker_image: Dockerfile webapp/package.json | webapp/build
-	docker build -t abstiles/webapp --rm .
-	docker images -q abstiles/webapp > "$@"
+docker-image: ${BUILD_DIR}/docker_image
 
-webapp/build:
-	mkdir webapp/build
+${BUILD_DIR}/docker_image: Dockerfile ${PROJECT}/package.json | ${BUILD_DIR}
+	docker build -t abstiles/${PROJECT} --rm .
+	docker images -q abstiles/${PROJECT} > "$@"
 
-webpack: webapp/build/index.html
+${BUILD_DIR}:
+	mkdir ${BUILD_DIR}
 
-webapp/build/index.html: webapp/src/*
-	docker run -it --rm -v $(pwd)/webapp:/usr/local/webapp/project:Z -w /usr/local/webapp/project abstiles/webapp webpack
+webpack: ${BUILD_DIR}/index.html
+
+${BUILD_DIR}/index.html: docker-image ${PROJECT}/src/*
+	docker run -it --rm \
+		-v "$(abspath ${PROJECT}):${DOCKER_WORKDIR}/project:Z" \
+		-w ${DOCKER_WORKDIR}/project \
+		abstiles/${PROJECT} \
+		webpack
