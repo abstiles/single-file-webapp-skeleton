@@ -1,20 +1,23 @@
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
+var failPlugin = require('webpack-fail-plugin');
 module.exports = {
-    entry: "./src/entry.js",
+    entry: "./src/entry.ts",
     output: {
         path: "./build",
         filename: "bundle.js"
     },
     module: {
         loaders: [
-            { test: /\.css$/, loader: "style!css" }
+            { test: /\.css$/, loader: "style!css" },
+            { test: /\.tsx?$/, loader: "ts-loader" }
         ]
     },
     plugins: [
         new HtmlWebpackPlugin({
             inlineSource: '.(js|css)$'
         }),
-        new HtmlWebpackInlineSourcePlugin()
+        new HtmlWebpackInlineSourcePlugin(),
+        failPlugin
     ]
 };
