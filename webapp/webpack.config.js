@@ -24,7 +24,8 @@ module.exports = {
         failPlugin
     ],
     resolve: {
-        root: [ process.env.NODE_PATH || "node_modules" ]
+        root: [ process.env.NODE_PATH || "node_modules" ],
+        extensions: ['', '.js', '.ts']
     },
     tslint: {
         failOnHint: true

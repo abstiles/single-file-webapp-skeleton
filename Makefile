@@ -1,11 +1,11 @@
-.PHONY: clean docker-image webpack
+.PHONY: clean docker-image test webpack
 
 PROJECT:=webapp
 BUILD_DIR:=${PROJECT}/build
 SRC_DIR:=${PROJECT}/src
 DOCKER_WORKDIR:=/usr/local/${PROJECT}/project
 
-all: docker-image webpack
+all: docker-image test webpack
 
 clean:
 	rm -rf "${BUILD_DIR}" "${PROJECT}"/node_modules
@@ -27,3 +27,10 @@ ${BUILD_DIR}/index.html: ${BUILD_DIR}/docker_image ${PROJECT}/ts*.json ${PROJECT
 		-w ${DOCKER_WORKDIR} \
 		$$(cat "${BUILD_DIR}/docker_image") \
 		webpack
+
+test: docker-image
+	docker run -it --rm \
+		-v "$(abspath ${PROJECT}):${DOCKER_WORKDIR}:Z" \
+		-w ${DOCKER_WORKDIR} \
+		$$(cat "${BUILD_DIR}/docker_image") \
+		karma start
