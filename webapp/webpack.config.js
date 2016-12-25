@@ -20,5 +20,8 @@ module.exports = {
         }),
         new HtmlWebpackInlineSourcePlugin(),
         failPlugin
-    ]
+    ],
+    resolve: {
+        root: [ process.env.NODE_PATH || "node_modules" ]
+    }
 };
