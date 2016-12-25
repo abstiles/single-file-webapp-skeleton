@@ -21,7 +21,7 @@ ${BUILD_DIR}:
 
 webpack: ${BUILD_DIR}/index.html
 
-${BUILD_DIR}/index.html: ${BUILD_DIR}/docker_image ${SRC_DIR} ${SRC_DIR}/*
+${BUILD_DIR}/index.html: ${BUILD_DIR}/docker_image ${PROJECT}/tsconfig.json ${PROJECT}/webpack.config.js ${SRC_DIR} ${SRC_DIR}/*
 	docker run -it --rm \
 		-v "$(abspath ${PROJECT}):${DOCKER_WORKDIR}:Z" \
 		-w ${DOCKER_WORKDIR} \
