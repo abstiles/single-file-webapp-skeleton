@@ -2,6 +2,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
 var failPlugin = require('webpack-fail-plugin');
 module.exports = {
+    devtool: 'inline-source-map',
     entry: "./src/entry.ts",
     output: {
         path: "./build",
