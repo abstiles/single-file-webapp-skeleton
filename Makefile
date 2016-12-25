@@ -2,7 +2,10 @@
 
 PROJECT:=webapp
 BUILD_DIR:=${PROJECT}/build
-DOCKER_WORKDIR:=/usr/local/${PROJECT}
+SRC_DIR:=${PROJECT}/src
+DOCKER_WORKDIR:=/usr/local/${PROJECT}/project
+
+all: docker-image webpack
 
 clean:
 	rm -rf "${BUILD_DIR}" "${PROJECT}"/node_modules
@@ -10,17 +13,17 @@ clean:
 docker-image: ${BUILD_DIR}/docker_image
 
 ${BUILD_DIR}/docker_image: Dockerfile ${PROJECT}/package.json | ${BUILD_DIR}
-	docker build -t abstiles/${PROJECT} --rm .
-	docker images -q abstiles/${PROJECT} > "$@"
+	docker build -t localhost/${PROJECT} --rm .
+	docker images -q localhost/${PROJECT} > "$@"
 
 ${BUILD_DIR}:
-	mkdir ${BUILD_DIR}
+	mkdir -p ${BUILD_DIR}
 
 webpack: ${BUILD_DIR}/index.html
 
-${BUILD_DIR}/index.html: ${BUILD_DIR}/docker_image ${PROJECT}/src/*
+${BUILD_DIR}/index.html: ${BUILD_DIR}/docker_image ${SRC_DIR} ${SRC_DIR}/*
 	docker run -it --rm \
-		-v "$(abspath ${PROJECT}):${DOCKER_WORKDIR}/project:Z" \
-		-w ${DOCKER_WORKDIR}/project \
-		abstiles/${PROJECT} \
+		-v "$(abspath ${PROJECT}):${DOCKER_WORKDIR}:Z" \
+		-w ${DOCKER_WORKDIR} \
+		$$(cat "${BUILD_DIR}/docker_image") \
 		webpack
