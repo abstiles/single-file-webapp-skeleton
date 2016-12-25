@@ -12,7 +12,8 @@ module.exports = {
         loaders: [
             { test: /\.css$/, loader: "style!css" },
             { test: /\.tsx?$/, loader: "ts-loader" }
-        ]
+        ],
+        preLoaders: [ { test: /\.tsx?$/, loader: "tslint-loader" } ],
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -24,5 +25,8 @@ module.exports = {
     ],
     resolve: {
         root: [ process.env.NODE_PATH || "node_modules" ]
+    },
+    tslint: {
+        failOnHint: true
     }
 };
