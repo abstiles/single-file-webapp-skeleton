@@ -16,6 +16,7 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
+            inject: 'head',
             inlineSource: '.(js|css)$'
         }),
         new HtmlWebpackInlineSourcePlugin(),
