@@ -33,6 +33,6 @@
     "typescript": "^2.1.4",
     "webpack": "^1.14.0",
     "webpack-fail-plugin": "^1.0.5",
-    "webpack-karma-die-hard": "^1.0.0"
+    "webpack-karma-die-hard": "^1.0.2"
   }
 }
