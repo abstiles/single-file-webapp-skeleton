@@ -79,11 +79,11 @@ module.exports = function(config) {
     concurrency: Infinity
   });
 
-  if (process.env.CIRCLE_ARTIFACTS) {
+  if (process.env.CIRCLE_TEST_REPORTS) {
     console.log("Producing test artifacts for CircleCI.");
     config.reporters = config.reporters.concat(["junit"]);
     config.junitReporter = {
-      outputDir: path.join(process.env.CIRCLE_ARTIFACTS, "karma")
+      outputDir: path.join(process.env.CIRCLE_TEST_REPORTS, "karma")
     };
   }
 }
