@@ -33,4 +33,4 @@ test: docker-image
 		-v "$(abspath ${PROJECT}):${DOCKER_WORKDIR}:Z" \
 		-w ${DOCKER_WORKDIR} \
 		$$(cat "${BUILD_DIR}/docker_image") \
-		karma start
+		npm test
