@@ -99,4 +99,12 @@ module.exports = function(config) {
       outputDir: path.join(process.env.CIRCLE_TEST_REPORTS, "karma")
     };
   }
+
+  if (process.env.CIRCLE_ARTIFACTS) {
+    console.log("Producing coverage artifacts for CircleCI.");
+    config.coverageReporter = {
+      type: 'html',
+      dir: path.join(process.env.CIRCLE_ARTIFACTS, "coverage")
+    }
+  }
 }
