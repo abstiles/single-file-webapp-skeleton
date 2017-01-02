@@ -1,5 +1,7 @@
 # Single-file Webapp Skeleton
 
+[![CircleCI](https://img.shields.io/circleci/project/github/abstiles/single-file-webapp-skeleton.svg)](https://circleci.com/gh/abstiles/single-file-webapp-skeleton)
+
 A skeleton for a single-file webapp project, including a basic Docker
 configuration for development.
 
