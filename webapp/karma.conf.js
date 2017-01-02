@@ -1,5 +1,6 @@
 var webpackConfig = require('./webpack.config');
 var WebpackKarmaDieHardPlugin = require('webpack-karma-die-hard');
+var path = require('path');
 
 module.exports = function(config) {
   config.set({
@@ -76,5 +77,13 @@ module.exports = function(config) {
     // Concurrency level
     // how many browser should be started simultaneous
     concurrency: Infinity
-  })
+  });
+
+  if (process.env.CIRCLE_TEST_REPORTS) {
+    console.log("Producing test artifacts for CircleCI.");
+    config.reporters = config.reporters.concat(["junit"]);
+    config.junitReporter = {
+      outputDir: path.join(process.env.CIRCLE_TEST_REPORTS, "karma")
+    };
+  }
 }
